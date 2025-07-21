@@ -33,11 +33,5 @@ R/ PC:El registro de memoria para los siguientes pasos
 - ¿Para qué los usa la CPU?
 R/ La CPU utiliza los registros para saber que pasos tiene que ejecutar para realizar la tarea.
 
-# Actividad 4
 
-- Escribe un programa en lenguaje ensamblador que guarde en la posición 32 de la RAM un 100.
-R/ @100
-   D=A
-   @32
-   M=D
 
