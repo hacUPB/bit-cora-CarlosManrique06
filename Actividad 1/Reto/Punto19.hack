@@ -1,4 +1,5 @@
 //Analiza el siguiente programa en lenguaje de máquina:
+
 0100000000000000
 1110110000010000
 0000000000010000

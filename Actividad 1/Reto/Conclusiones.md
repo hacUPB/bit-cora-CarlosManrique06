@@ -81,13 +81,13 @@ PUNTO 11
 R/ Crea un arreglo de 10 enteros llamado arr, recorre el arreglo 10 veces hasta que se completa el bucle, suma el valor de arr[j] a sum y como resultado sum contiene la suma de los 10 elementos del arreglo arr.
 
 - ¿Cuál es la dirección base de arr en la memoria RAM?
-R/ Si arr es la primera variable ocuparia de base la RAM 16, pero podria posicionarse en otra direccion dependiendo el numero de variables puestas en el programa
+R/ Si arr es la primera variable ocuparia de base la RAM 16, pero podria posicionarse en otra direccion dependiendo el numero de variables puestas en el programa, pero para el ejercicio el valor que esta en la ram es la direccion en la que estaría el rango del arreglo
 
 - ¿Cuál es la dirección base de sum en la memoria RAM y por qué?
-R/
+R/Para este ejercicio la dirección base de sum es 18
 
 - ¿Cuál es la dirección base de j en la memoria RAM y por qué?
-R/ j ocuparia 10 direcciones por cada elemento que tenga el el array
+R/ j esta en la direccion 16, ya que es la primera variable creada en el programa.
 
 PUNTO 17
 R/ Para realizar un condicional con de restando o sumando algo, primero tengo que ingresar el valor con el que voy a realizar la comparacion y luego si restarlo a D. Antes de realizar el salto se escribe en rom el la direccion a la que va a ir si se cumple el condicional. Realice solo la condicion, pero tambien probe cuando la condicion se cumple en el programa para corroborar de que si salta a la direccion 69.
@@ -101,7 +101,7 @@ Este fue el bitmap que realice:
 
 PUNTO 19
 
-R/ Es un bitmap
+R/ Prepara la pantalla para recibir un valor del teclado
 
 PUNTO 20
 

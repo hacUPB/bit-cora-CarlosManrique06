@@ -4,29 +4,26 @@
     //if (i == 0) goto CONT
     //i = i - 1
     //goto LOOP
-    //CONT:
-   
+    //CONT: 
     
     //La traducción a lenguaje ensamblador del programa anterior es:
     
     
-    // i = 1000
+    
     @1000
-    D=A
+    D=A  // inicializa  en i el valor 1000
     @i
     M=D
     (LOOP)
-    // if (i == 0) goto CONT
+    
     @i
-    D=M
+    D=M // si se cumple la condicion i== salta a cont
     @CONT
     D;JEQ
-    // i = i - 1
+    
     @i
     M=M-1 //le resta 1 al valor en M en la variable i
-    // goto LOOP
+    
     @LOOP
     0;JMP
     (CONT)
-    
-  
