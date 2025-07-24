@@ -66,7 +66,7 @@ PUNTO 11
 
    PUNTO 14
 
-   R/ Me di cuenta que R4 = RAM[R1] no es igual a RAM[R4]= RAM[R1], ya que lo primero te dice que el valor guardado en R1 lo asignes en R4, en cambio lo que dice el ejercicio es que el valor de R1 se tiene que usar como  direccion, ir a esa direccion y guardar ese valor en R4. Entonces en este ejercicio que el valor en R1 se guarde en A para ir a esa dirección y ahí si guardar el valor en R4. En este caso el valor en R1 fue 8 y en R8 puse 10 para probar el programa.
+   R/ Me di cuenta que R4 = RAM[R1] no es igual a RAM[R4]= RAM[R1], ya que lo primero te dice que el valor guardado en R1 lo asignes en R4, en cambio lo que dice el ejercicio es que el valor de R1 se tiene que usar como  direccion, ir a esa direccion y guardar ese valor en R4. Entonces en este ejercicio que el valor en R1 se guarde en A para ir a esa dirección y ahí si guardar ese valor en R4. En este caso el valor en R1 fue 8 y en R8 puse 10 para probar el programa.
 
    ![alt text](Imagenes/Punto14.jpg)
 
