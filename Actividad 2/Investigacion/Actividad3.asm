@@ -1,4 +1,5 @@
 //Codigo para lectura de teclado
+(RESTART)
 (LOOP)
 @KBD //KBD = 24576
 D=M
@@ -6,33 +7,13 @@ D=M
 D=D-A
 @DRAW
 D;JEQ
+D=M
+@CLEAR
+D;JEQ
 @LOOP
 0;JMP
+
 (DRAW)
-
-
-(LOOP)
-@i
-D=M
-@
-D=D-M  //Este bloque revisa si i es mayor o igual  para ver si salta a end por la region de R1
-@END
-D;JGE
-
-@i
-D=M
-@16384 //Este bloque usa el valor como direccion que se le suma a i para saber donde ubicar el -1 en la region de memoria
-A=M
-A=D+A
-M=0
-
-@i
-M=M+1
-@LOOP //Como i se usa como contador la idea es que sume 1 hasta completar la region de memoria de asignada por R1
-0;JMP
-
-(END)
-
 // put bitmap location value in R12
 // put code return address in R13
     @SCREEN
@@ -272,4 +253,27 @@ M=M+1
 	@R13
 	A=M
 	D;JMP
+(CLEAR)
+    @16384      // i = SCREEN (RAM[16384])
+    D=A
+    @i
+    M=D
+
+(CLEAR_LOOP)
+    @i
+    A=M
+    M=0         // RAM[i] = 0
+
+    @i
+    M=M+1       // i++
+
+    @24576
+    D=A
+    @i
+    D=D-M
+    @CLEAR_LOOP
+    D;JGT       // Si i < 24576, seguir borrando
+
+    @LOOP
+    0;JMP
 
