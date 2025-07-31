@@ -20,3 +20,9 @@ R/ La pantalla tiene un mapeo y un espacio desginado en la memoria que puede ser
 - Vas a implementar y simular una modificación al reto 20 de la unidad anterior. Si se presiona la letra “d” muestras la imagen que diseñaste en el reto 18. Si no se presiona ninguna tecla, borrarás la imagen.
 
 R/
+
+### Actividad 4
+
+Ahora realizarás una nueva variación al programa de la actividad anterior. Si se presiona la letra “d” muestras la imagen que diseñaste en el reto 18. Solo si se presiona la letra “e” borrarás la imagen que se muestra en pantalla.
+
+R/

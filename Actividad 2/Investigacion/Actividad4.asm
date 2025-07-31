@@ -256,7 +256,7 @@ D;JEQ
 	A=M
 	D;JMP
 (CLEAR)
-    @16384      // i  es igual a la RAM[16384] para iniciar desde ahí el recorrido
+    @SCREEN      // i  es igual a la RAM[16384] (screen) para iniciar desde ahí el recorrido
     D=A
     @i
     M=D
@@ -269,12 +269,12 @@ D;JEQ
     @i
     M=M+1       //i aumenta una posicion
 
-    @24576
+    @KBD
     D=A
     @i
     D=D-M
     @CLEAR_LOOP
-    D;JGT       // Si i < 24576, sigue borrando hasta que todo sea 0 desde 16384
+    D;JGT       // Si i < 24576, sigue borrando hasta que todo sea 0 desde 16384 que es la screen
 
     @LOOP
     0;JMP

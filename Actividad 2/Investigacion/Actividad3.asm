@@ -1,5 +1,4 @@
 //Codigo para lectura de teclado
-(RESTART)
 (LOOP)
 @KBD //KBD = 24576
 D=M
@@ -254,25 +253,25 @@ D;JEQ
 	A=M
 	D;JMP
 (CLEAR)
-    @16384      // i = SCREEN (RAM[16384])
+    @SCREEN      // i  es igual a la RAM[16384] para iniciar desde ahí el recorrido
     D=A
     @i
     M=D
 
 (CLEAR_LOOP)
     @i
-    A=M
-    M=0         // RAM[i] = 0
+    A=M          //Se guarda en A como nueva direccion la que tiene i
+    M=0          //En la posicion que esta i actualmente se le coloca un 0
 
     @i
-    M=M+1       // i++
+    M=M+1       //i aumenta una posicion
 
-    @24576
+    @KBD
     D=A
     @i
     D=D-M
-    @CLEAR_LOOP
-    D;JGT       // Si i < 24576, seguir borrando
+    @CLEAR_LOOP    
+    D;JGT       // Si i < 24576, sigue borrando hasta que todo sea 0 desde 16384
 
     @LOOP
     0;JMP
