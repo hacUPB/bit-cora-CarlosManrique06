@@ -2,10 +2,10 @@
 
 - ¿Qué es la entrada-salida mapeada a memoria?
 
-R/ Es una técnica de programación que permite acceder a dispositivos de entrada y salida como si fueran memoria. Esto se logra mapeando los puertos de entrada y salida a direcciones de memoria específicas, permitiendo que el programa acceda a estos dispositivos de manera similar a como accede a la memoria principal.
+R/ Permite acceder a dispositivos de entrada y salida como si fueran memoria,mapeando los puertos de entrada y salida a direcciones de memoria específicas donde la pantalla se va llenando por 256 filas y 512 columnas, en este caso la entrada es el teclado y la salida es la pantalla. Cada tecla tiene su propio código que se guardan al presionar en la dirección del teclado que es la 24576, todo el proceso con el fin de obtener datos que da el usuario y mostrarle datos al usuario a traves de la salida y manipulacion de los bits.
 
 - ¿Cómo se implementa en la plataforma Hack?
-R/ 
+R/ La pantalla tiene un mapeo y un espacio desginado en la memoria que puede ser modificado por el código para cambiar y refrescar la salida que es la pantalla del proceso que quisieramos mostrar en ella. El mapeo de pantalla es de 256 ancho por 512 de largo de pixeles. Dependiendo del bit que quiera modificar tengo que encontrar la dirección de la memoria enla que esta ese bit, en ese grupo modificar ese bit y luego regresarlo a la memoria RAM, entonces siempre cuando haga un cambio estoy manipulando 16 bits en 0 o 1.
 
 - Inventa un programa que haga uso de la entrada-salida mapeada a memoria.
 
