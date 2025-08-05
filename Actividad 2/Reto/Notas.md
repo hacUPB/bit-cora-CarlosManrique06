@@ -2,19 +2,19 @@
 
 1. Escribe un programa en lenguaje ensamblador que sume los primeros 100 números naturales.
 
-    ```cpp
+```cpp
     int i = 1;
     int sum = 0;
     While (i <= 100){
        sum += i;
        i++;
     }
-    ```
-    <video controls src="Reto1.mp4" title="Title"></video>
+```
+<video controls src="Reto1.mp4" title="Title"></video>
 
-    - ¿Cómo están implementadas las variables `i` y `sum`?
+- ¿Cómo están implementadas las variables `i` y `sum`?
 
-      R/ en este programa i es el contador y a su vez es el valor que se le va a sumar a la variable sum hasta que i sea mayor a 100. Por otro lado, sum es la variable va sumando i en el ciclo y guardando ese resultado en la dirección que tiene.
+  R/ en este programa i es el contador y a su vez es el valor que se le va a sumar a la variable sum hasta que i sea mayor a 100. Por otro lado, sum es la variable va sumando i en el ciclo y guardando ese resultado en la dirección que tiene.
 
     - ¿En qué direcciones de memoria están estas variables?
 
@@ -50,13 +50,13 @@
 
     El ciclo for contiene una variable de inicializacion y contador normalmente nombrada i, luego la condicion que en este caso seria  i <= 100 y sumarle 1 al contador para que el ciclo continue hasta que la condicion termine.
     
-![alt text](Imagenes/Reto2.png)
+ ![alt text](Reto2.png)
 
-  ### Actividad 3
 
-    Escribe un programa en lenguaje ensamblador que implemente el programa anterior.
+### Actividad 3
+Escribe un programa en lenguaje ensamblador que implemente el programa anterior.
 
-    R/ Es casi igual a la actividad 1, solo que la diferencia es más la estructura que tiene el while y el for en alt nivel, ya que en el for se inicializa el i = 1 y luego se hacen las condiciones y siempre tiene la misma estructura, aunque es mas usado para casos en los que se sabe cuantas veces va a recorrerse el ciclo. En cambio, el while  se basa más en la condicion que lleva para recorrerse sin inicializarse en el mismo bucle, aunque, en este ejercicio en ambos codigos de bajo nivel se obtiene el mismo resultado.
+R/ Es casi igual a la actividad 1, solo que la diferencia es más la estructura que tiene el while y el for en alt nivel, ya que en el for se inicializa el i = 1 y luego se hacen las condiciones y siempre tiene la misma estructura, aunque es mas usado para casos en los que se sabe cuantas veces va a recorrerse el ciclo. En cambio, el while  se basa más en la condicion que lleva para recorrerse sin inicializarse en el mismo bucle, aunque, en este ejercicio en ambos codigos de bajo nivel se obtiene el mismo resultado.
 
 
   ### Actividad 4
@@ -93,7 +93,7 @@ punt = &var;
 ```
 R/ Primero se le asigna el valor 10 a var, luego se crea un puntero que para crearlo tengo que guardar la direccion de var en PUNT, entonces si yo quiero un valor a la direccion del puntero, guardo M en A y luego el valor o la operacion que quiera realizar para guardar un valor en esa direccion a la que apunta el puntero.
 
-![alt text](Imagenes/Reto5.jpg)
+![alt text](Reto5.jpg)
 
 ### Actividad 6
 
@@ -116,7 +116,7 @@ R/ Primero se le asigna el valor 10 a var, luego se crea un puntero que para cre
 
  R/ se guarda 10 en var, se guarda 5 en bis y se guarda la direccion de var en PUNT, luego se guarda el valor de la direccion al que apunta el puntero y lo guarda en bis, osea apunta a la direccion var, toma ese valor que tiene guardado var en este caso 10 y lo guarda en bis.
 
- ![alt text](Imagenes/Reto7.jpg)
+ ![alt text](Reto7.jpg)
 
 
  ### Actividad 8
