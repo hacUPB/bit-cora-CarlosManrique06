@@ -13,7 +13,7 @@ While (i <= 100)
 }
 
 ```
-<video controls src="Reto1.mp4" title="Title"></video>
+![alt text](Reto1.png)
 
 
 - ¿Cómo están implementadas las variables `i` y `sum`?
