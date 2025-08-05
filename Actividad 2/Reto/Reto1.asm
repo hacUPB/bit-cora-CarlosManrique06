@@ -1,29 +1,29 @@
-    @i 
-    M=1
-    @sum
-    M=0
+@i 
+M=1
+@sum
+M=0
 
-  (LOOP)  
+(LOOP)  
 
-    @i
-    D=M
-    @101
-    D=D-A
+@i
+D=M
+@101
+D=D-A
     
-    @END
-    D;JGE 
+@END
+D;JGE 
 
-    @sum
-    D=M
-    @i
-    D=D+M
-    @sum
-    M=D
+@sum
+D=M
+@i
+D=D+M
+@sum
+M=D
 
-    @i
-    M=M+1  
+@i
+M=M+1  
 
-    @LOOP
-    0;JMP     
+@LOOP
+0;JMP     
 
-    (END)
+ (END)
