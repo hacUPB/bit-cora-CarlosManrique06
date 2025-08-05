@@ -10,7 +10,7 @@
        i++;
     }
     ```
-    <video controls src="Reto/Videos/Reto1.mp4" title="Title"></video>
+    <video controls src="Reto1.mp4" title="Title"></video>
 
     - ¿Cómo están implementadas las variables `i` y `sum`?
 
@@ -50,7 +50,7 @@
 
     El ciclo for contiene una variable de inicializacion y contador normalmente nombrada i, luego la condicion que en este caso seria  i <= 100 y sumarle 1 al contador para que el ciclo continue hasta que la condicion termine.
     
-![alt text](Reto/Imagenes/Reto2.png)
+![alt text](Imagenes/Reto2.png)
 
   ### Actividad 3
 
@@ -93,7 +93,7 @@ punt = &var;
 ```
 R/ Primero se le asigna el valor 10 a var, luego se crea un puntero que para crearlo tengo que guardar la direccion de var en PUNT, entonces si yo quiero un valor a la direccion del puntero, guardo M en A y luego el valor o la operacion que quiera realizar para guardar un valor en esa direccion a la que apunta el puntero.
 
-![alt text](Reto/Imagenes/Reto5.jpg)
+![alt text](Imagenes/Reto5.jpg)
 
 ### Actividad 6
 
@@ -116,7 +116,7 @@ R/ Primero se le asigna el valor 10 a var, luego se crea un puntero que para cre
 
  R/ se guarda 10 en var, se guarda 5 en bis y se guarda la direccion de var en PUNT, luego se guarda el valor de la direccion al que apunta el puntero y lo guarda en bis, osea apunta a la direccion var, toma ese valor que tiene guardado var en este caso 10 y lo guarda en bis.
 
- ![alt text](Reto/Imagenes/Reto7.jpg)
+ ![alt text](Imagenes/Reto7.jpg)
 
 
  ### Actividad 8
