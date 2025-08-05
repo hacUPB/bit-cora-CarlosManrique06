@@ -5,3 +5,5 @@ for (int i = 1; i <= 100; i++)
 {
     sum += i;
 }
+
+Console.WriteLine(sum);

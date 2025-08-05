@@ -5,7 +5,7 @@ M=D // se guarda 10 en var
 
 @5
 D=A
-@bis  // se guarda 5 en var
+@bis  // se guarda 5 en bis
 M=D
 
 @var
