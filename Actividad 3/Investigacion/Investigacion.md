@@ -105,20 +105,20 @@ R/ Le aumente el tope máximo de pos a 500, el radio del círculo lo puse en 20,
 
 - ¿Cuál es la definición de un puntero?
 
-R/
+R/ Es un tipo de dato encargado de guardar una dirección de memoria.
 
 - ¿Dónde está el puntero?
 
-R/
+R/En el programa este es el puntero, ya que tiene el * para inicializarlo std::vector<Sphere*> globalVector;
 
 - ¿Cómo se inicializa el puntero?
 
-R/
+R/ SE inicializa con el *
 
 - ¿Para qué se está usando el puntero?
 
-R/
+R/ Para guardar direcciones de memoria por si necesitamos luego desreferenciar
 
 - ¿Qué es exactamente lo que está almacenado en el puntero?
 
-R/
+R/ En este caso: std::vector<Sphere*> globalVector; Lo que está guardando es la direccion que tiene cada esfera creada en el vector y no la esfera en si, sino la dirección de esa esfera.
