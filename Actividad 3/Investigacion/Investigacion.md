@@ -113,7 +113,7 @@ R/En el programa este es el puntero, ya que tiene el * para inicializarlo std::v
 
 - ¿Cómo se inicializa el puntero?
 
-R/ SE inicializa con el *
+R/ Se inicializa con el *
 
 - ¿Para qué se está usando el puntero?
 
@@ -122,3 +122,33 @@ R/ Para guardar direcciones de memoria por si necesitamos luego desreferenciar
 - ¿Qué es exactamente lo que está almacenado en el puntero?
 
 R/ En este caso: std::vector<Sphere*> globalVector; Lo que está guardando es la direccion que tiene cada esfera creada en el vector y no la esfera en si, sino la dirección de esa esfera.
+
+### Actividad 6
+
+El código anterior tiene un problema. ¿Puedes identificar cuál es? ¿Cómo lo solucionarías? Recuerda que deberías poder seleccionar una esfera y moverla con el mouse.
+
+R/ El problema es que para seleccionar una esfera la distancia tiene que ser menor que el radio de la esfera, pero cuando se selecciona una esfera y se mueve con el mouse, no se puede seleccionar otra diferente, ya que la distancia del mouse seguiria siendo menor que el radio en la que estoy moviendo. Para solucionarlo, se podría crear una nueva funcion para cuando el click izquierdo del mouse se suelte y que selectedSphere sea NULL, para que se pueda seleccionar otra esfera.
+
+```cpp
+
+//ofApp.h
+void mouseReleased(int x, int y, int button);
+
+
+//ofApp.cpp
+void ofApp::mouseReleased(int x, int y, int button) 
+
+{
+    if (button == 0)
+
+    {
+       selectedSphere = nullptr;
+    }
+
+}
+
+```
+
+
+### Actividad 7
+
