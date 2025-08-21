@@ -152,3 +152,44 @@ void ofApp::mouseReleased(int x, int y, int button)
 
 ### Actividad 7
 
+Primer Código con Stack: ¿Qué sucede cuando presionas la tecla “c”?
+
+R/ Cuando presiono c se crea una esfera de forma local en la funcion, en el bloque de memoria stack, pero como es local la esfera no se muestra porque se destruye cuando finaliza la funcion
+
+Segundo código con heap:
+
+
+- ¿Qué sucede cuando presionas la tecla “c”?
+
+R/ Cuando presiono c se crea una esfera con el new, entonces esto se guarda en la memoria dinamica, la cual es heap, por lo tanto la esfera si se muestra en algun lado del canva al terminar la funcion 
+
+- ¿Por qué ocurre esto?
+
+R/ Esto ocurre porque al guardar en stack el objeto solo se mantiene mientras dure la funcion y apenas termine se elimina. En cambio, si se guarda en heap esta no se eliminara hasta que se use algun comando para borrala, sino seguira funcionando aunque la funcion haya terminado.
+
+
+### Actividad 8
+
+¿Cuándo debo crear objetos en el heap y cuándo en memoria global?
+
+R/Heap cuando tiene que durar mas que la funcion, pero durante cierto tiempo del programa y global si tiene que durar mientras el programa corre.
+
+### Actividad 9
+
+
+Primer codigo: 
+
+- ¿Qué sucede cuando presionas la tecla “f”?
+
+R/ Cuando presiono la letra f se borra el ultimo objeto guardado en la memoria heap.
+
+Analiza detalladamente esta parte del código:
+
+```cpp
+if(!heapObjects.empty()) {
+    delete heapObjects.back();
+    heapObjects.pop_back();
+}
+```
+
+R/ el if pregunta si hay algun  objeto guardados en la memoria heap,  y si es asi borra el ultimo objeto guardado en la memoria heap y la última linea lo que hace es elminar el objeto del vector de heapObjects
