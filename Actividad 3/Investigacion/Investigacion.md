@@ -170,6 +170,78 @@ R/ Esto ocurre porque al guardar en stack el objeto solo se mantiene mientras du
 
 ### Actividad 8
 
+Código Experimento app.h:
+```cpp
+#pragma once
+#include "ofMain.h"
+
+ofRectangle globalRect;
+
+class ofApp : public ofBaseApp {
+public:
+	void setup();
+	void update();
+	void draw();
+	void keyPressed(int key);
+
+
+	ofRectangle stackRect;
+
+	vector<ofRectangle *> heapRects;
+};
+
+```
+Código Experimento app.cpp:
+
+```cpp
+#include "ofApp.h"
+
+
+void ofApp::setup() {
+
+	globalRect.set(50, 50, 100, 100); 
+	stackRect.set(200, 50, 100, 100); 
+}
+
+void ofApp::update() {
+}
+
+void ofApp::draw() {
+	ofSetColor(255, 0, 0);
+	ofDrawRectangle(globalRect); 
+
+	ofSetColor(0, 255, 0);
+	ofDrawRectangle(stackRect);
+
+	ofSetColor(0, 0, 255);
+	for (auto r : heapRects) {
+		ofDrawRectangle(*r); 
+	}
+}
+
+void ofApp::keyPressed(int key) {
+	if (key == 'h') {
+		
+		ofRectangle * newRect = new ofRectangle(ofRandom(50, 500), ofRandom(200, 400), 50, 50);
+		heapRects.push_back(newRect);
+	}
+
+	if (key == 'd') {
+		
+		if (!heapRects.empty()) {
+			delete heapRects.back();
+			heapRects.pop_back();
+		}
+	}
+}
+
+
+```
+
+![alt text](<Act 8.jpg>)
+
+R/ Lo que hace el codigo es que crea 2 rectangulos al iniciar el programa uno que se guarda en memoria global y otro en memoria stack. Para crear un rectangulo en heap sucede cuando se oprime la tecla h y para borrarlos de la memoria se presiona la tecla d
+
 ¿Cuándo debo crear objetos en el heap y cuándo en memoria global?
 
 R/Heap cuando tiene que durar mas que la funcion, pero durante cierto tiempo del programa y global si tiene que durar mientras el programa corre.
