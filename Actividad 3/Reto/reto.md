@@ -311,4 +311,4 @@ La memoria del vector std::vector<glm::vec3> spherePositions; es la siguiente:
 Los elementos del vector spherePositions están almacenados en el heap, porque std::vector reserva un bloque dinámico de memoria para sus elementos, ya que es el vector que se crea es uno dinamico.
 
 
-Las variables ubicadas en el .h como xStep, yStep, etc. Son variables globales, ya que son variables que  se mantienen durante la ejecucion del programa
+Las variables ubicadas en el .h como xStep, yStep, etc. Son variables globales, ya que son variables que  se mantienen durante la ejecucion del programa.
