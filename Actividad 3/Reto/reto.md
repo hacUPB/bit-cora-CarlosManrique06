@@ -295,4 +295,20 @@ void ofApp::keyPressed(int key) {
 
 - Ejemplos del programa con cambios
 
-- [Ejemplo de Cambios](https://youtu.be/8AEnJvh32HQ)
+    [Ejemplo de Cambios](https://youtu.be/8AEnJvh32HQ)
+
+
+
+## Análisis de Memoria
+
+La memoria del vector std::vector<glm::vec3> spherePositions; es la siguiente: 		
+
+```cpp
+	{_Myval2={_Myfirst=0x000000000d09a880 {x=-512.000000 r=-512.000000 s=-512.000000 ...} _Mylast=0x000000000d0a50b0 {...} ...} }	std::_Compressed_pair<std::allocator<glm::vec<3,float,0>>,std::_Vector_val<std::_Simple_types<glm::vec<3,float,0>>>,1>
+
+```
+
+Los elementos del vector spherePositions están almacenados en el heap, porque std::vector reserva un bloque dinámico de memoria para sus elementos, ya que es el vector que se crea es uno dinamico.
+
+
+Las variables ubicadas en el .h como xStep, yStep, etc. Son variables globales, ya que son variables que  se mantienen durante la ejecucion del programa
