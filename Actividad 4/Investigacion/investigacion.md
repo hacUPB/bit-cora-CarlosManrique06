@@ -27,39 +27,38 @@ R/ La memoria en una lista enlazada se gestiona en la memoria heap y con el new 
 
 6. Considerando la estructura de una lista enlazada, ¿qué ventajas ofrece en comparación con un arreglo cuando se trata de insertar o eliminar elementos en posiciones intermedias?
 
-R/
+R/  La ventaja es que tu puedes seleccionar el nodo que apunta a ese intermedio y asi inserta o eliminar el elemento en esa direccion, en cambio con el arreglo tienes que mover los elementos o recorrer todo el arreglo hasta esa mitad, ya que los elementos se ponen de manera continua.
 
 
 7. En el código presentado, ¿Cómo se asegura que no haya fugas de memoria? ¿Qué papel juega el destructor en la clase LinkedList?
 
-
+R/ Con el clear, ya que como los elementos se crean en el heap con el clear nos aseguramos de borrar los elementos en caso de que lo necesitemos y en el destructor llamamos ese clear.
 
 
 8. ¿Qué sucede en la memoria cuando se invoca el método clear() en una lista enlazada? Explica paso a paso cómo se liberan los recursos.
 
-
+R/ el método clear, recorre la lista desde el primer nodo que es head hasta el último, y en cada iteración guarda una referencia al siguiente nodo , elimina el nodo actual con delete para liberar la memoria que ocupaba y luego avanza al siguiente nodo usando ese puntero guardado. De esta manera cada nodo creado se libera y se ponen en null para evitar problemas
 
 
 9. Explica cómo cambia la estructura en memoria de una lista enlazada al agregar un nuevo nodo al final de la lista. ¿Cómo afecta esto al rendimiento de la lista enlazada?
 
-
+R/ Como normalmente el último nodo está en null cuando ya tiene un final, al agregar otro nodo ese nodo que era el final en su puntero tiene que a puntar a ese nuevo nodo que se agrego al final y ese nodo final estaría apuntando a null.
 
 10. Analiza una situación en la que utilizar una lista enlazada sería más ventajoso que utilizar un arreglo. Justifica tu respuesta considerando la gestión de memoria y las operaciones de inserción y eliminación.
 
-
+R/ Como la lista enlazada no es continua la puedes utilizar en un programa que necesites eliminar muchos componentes a la vez y en pos especificas y principalmente si esas pos especificas están en la parte intermedia, ya que de esta manera puedes liberar la memoria eficientemente gracias a los punteros.
 
 11. Después de estudiar el manejo de memoria en listas enlazadas, ¿Cómo aplicarías este conocimiento para diseñar una estructura de datos personalizada para una aplicación creativa? ¿Qué aspectos considerarías para asegurar la eficiencia y evitar fugas de memoria?
 
-
-
+R/ Tener métodos que se encarguen de liberar la memoria de esas pos especificas o franjas medias usando el destructor para corroborar es liberacion y siempre teniendo head and tail para en base a esto usar los nodos.
 
 12. Reflexiona sobre las diferencias en la gestión de memoria entre C++ y un lenguaje con recolección de basura automática como C#. ¿Qué ventajas y desafíos encuentras en la gestión explícita de memoria en C++ al trabajar con estructuras de datos?
 
-
+R/La gran diferencia es asegurarnos de que este funcionando correctamente la gestion de memoria, ya que como en C++ nosotros decidimos que queremos borrar con delete y cuando no, así que el mayor desafio es darnos cuenta que no haya fallos en el flujo para evitar fugas de memoria para que el programa pueda correr limpiamente.
 
 13. Imagina que estás optimizando una pieza de arte generativo que usa listas enlazadas para representar elementos en movimiento. ¿Qué consideraciones tomarías en cuenta para garantizar que la gestión de la memoria sea eficiente y que no ocurran fugas de memoria?
 
-
+R/
 
 14. **Pruebas:** pregunta a ChatGPT cómo podrías probar las partes del programa y el programa completo. Luego realiza las pruebas y verifica si los resultados coinciden con tus expectativas.
 
