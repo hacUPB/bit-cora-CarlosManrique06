@@ -56,6 +56,7 @@ En el .h
 
 ```cpp
 
+
 //Nuevo estado
 
 class MyState : public State {
