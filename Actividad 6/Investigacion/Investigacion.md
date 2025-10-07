@@ -88,7 +88,7 @@ En el .cpp
      setState(new MyState());
  }
 
-//Lo q ue agregue al Update de mi nuevo estado
+//Lo que agregue al Update de mi nuevo estado
 void MyState::update(Particle* particle) {
     ofVec2f mousePosition(((ofApp*)ofGetAppPtr())->mouseX, ((ofApp*)ofGetAppPtr())->mouseY);
     ofVec2f direction = particle->position - mousePosition;
