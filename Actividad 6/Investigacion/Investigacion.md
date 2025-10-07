@@ -50,6 +50,18 @@ void ofApp::setup() {
 
 ```
 
+- ¿Qué hace el patrón observer en este caso?
+
+R/ El patrón Observer en este caso permite que actúe como emisora de eventos, mientras que las partículas son los observadores que reaccionan a esos eventos. Cuando el usuario presiona una tecla, ofApp notifica a todas las partículas con un mensaje como “attract” o “stop”, y cada partícula cambia su comportamiento según ese evento. 
+
+- ¿Qué hace el patrón factory en este caso?
+
+R/ El patrón Factory se utiliza para crear distintos tipos de partículas desde un solo punto de construcción. La clase ParticleFactory decide cómo inicializar una partícula según su tipo por ejemplo, “star” ó “planet”  asignando propiedades como color, tamaño y velocidad. De esta forma, el código que crea las partículas no necesita conocer los detalles de configuración y facilita agregar nuevos tipos en el futuro.
+
+- ¿Qué hace el patrón state en este caso?
+
+R/ El patrón State permite que cada partícula cambie su comportamiento dinámicamente dependiendo del estado, cada estado (NormalState, AttractState, RepelState y StopState) tienen un modo de movimiento distinto, y la partícula realiza la lógica respecto al estado actual.  Cambiar el estado equivale a cambiar la forma en que la partícula se comporta.
+
 ### Particula añadida al funcionamiento
 
 En el .h
