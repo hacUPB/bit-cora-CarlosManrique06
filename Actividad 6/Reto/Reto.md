@@ -219,3 +219,21 @@ El jugador es el círculo azul, el poder de defensa es el círculo amarillo, el 
 - Estado Game over
 
 ![alt text](img_gameOver.jpg)
+
+
+### Analisis de memoria
+
+
+- Observadores
+
+
+![alt text](Observers.png)
+
+
+- Power Ups
+
+![alt text](PowerUpsCapacity.png)
+
+- Memoria
+
+![alt text](Memoria.png)

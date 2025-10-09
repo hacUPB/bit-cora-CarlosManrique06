@@ -21,11 +21,11 @@ public:
 class Subject {
 protected:
 	// vector de punteros crudos a Observer 
-	std::vector<Observer *> observers;
+	std::vector<Observer*> observers;
 
 public:
 	// Registrar un observador
-	void addObserver(Observer * obs) { observers.push_back(obs); }
+	void addObserver(Observer* obs) { observers.push_back(obs); }
 
 	// Notificar a todos los observadores acerca de un power-up activado.
 	void notifyPowerUp(std::string type) {
@@ -42,8 +42,8 @@ public:
 class CircleState {
 public:
 	// update y draw reciben un puntero al PlayerCircle para poder mutar su comportamiento y acceder a sus campos.
-	virtual void update(class PlayerCircle * circle) = 0;
-	virtual void draw(class PlayerCircle * circle) = 0;
+	virtual void update(class PlayerCircle* circle) = 0;
+	virtual void draw(class PlayerCircle* circle) = 0;
 
 	// Devuelve el nombre del estado
 	virtual std::string getName() = 0;
@@ -54,8 +54,8 @@ public:
 // Estado por defecto / sano
 class NormalState : public CircleState {
 public:
-	void update(PlayerCircle * circle) override;
-	void draw(PlayerCircle * circle) override;
+	void update(PlayerCircle* circle) override;
+	void draw(PlayerCircle* circle) override;
 	std::string getName() override { return "Normal"; }
 };
 
@@ -65,35 +65,35 @@ class PowerState : public CircleState {
 	float timer = 0;
 
 public:
-	void update(PlayerCircle * circle) override;
-	void draw(PlayerCircle * circle) override;
+	void update(PlayerCircle* circle) override;
+	void draw(PlayerCircle* circle) override;
 	std::string getName() override { return "Power"; }
 };
 
 // Estado cuando el jugador está debilitado 
 class WeakState : public CircleState {
 public:
-	void update(PlayerCircle * circle) override;
-	void draw(PlayerCircle * circle) override;
+	void update(PlayerCircle* circle) override;
+	void draw(PlayerCircle* circle) override;
 	std::string getName() override { return "Weak"; }
 };
 
 // Estado temporal donde el jugador no recibe daño 
 class InvulnerableState : public CircleState {
 	float timer = 0; // tiempo que lleva el estado
-	bool visible = true; 
+	bool visible = true;
 
 public:
-	void update(PlayerCircle * circle) override;
-	void draw(PlayerCircle * circle) override;
+	void update(PlayerCircle* circle) override;
+	void draw(PlayerCircle* circle) override;
 	std::string getName() override { return "Invulnerable"; }
 };
 
 // Estado final: Game Over 
 class GameOverState : public CircleState {
 public:
-	void update(PlayerCircle * circle) override;
-	void draw(PlayerCircle * circle) override;
+	void update(PlayerCircle* circle) override;
+	void draw(PlayerCircle* circle) override;
 	std::string getName() override { return "GameOver"; }
 };
 
@@ -104,24 +104,24 @@ public:
 // y contiene un std::unique_ptr<CircleState> para delegar su comportamiento.
 class PlayerCircle : public Observer {
 public:
-	ofVec2f pos; 
-	float radius; 
-	int lives; 
-	float speed; 
+	ofVec2f pos;
+	float radius;
+	int lives;
+	float speed;
 	std::unique_ptr<CircleState> state; // estado activo
-	std::string prevStateName; 
-	bool canMove; 
+	std::string prevStateName;
+	bool canMove;
 
 	PlayerCircle();
 
-	void move(); 
+	void move();
 	void update(); // delega al state actual
 	void draw(); // delega al state actual
 
-	void takeDamage(); 
+	void takeDamage();
 	void changeState(std::unique_ptr<CircleState> newState); // cambia estado
 	void onPowerUpActivated(std::string type) override; // Observer callback
-	void reset(); 
+	void reset();
 };
 
 // ---------------------------------------------------------
@@ -132,9 +132,9 @@ public:
 // Clase base Enemy: define propiedades comunes y comportamiento por defecto.
 class Enemy {
 public:
-	ofVec2f pos, vel; 
-	ofColor color; 
-	float size; 
+	ofVec2f pos, vel;
+	ofColor color;
+	float size;
 	virtual void update();
 	virtual void draw();
 	virtual ~Enemy() = default;
@@ -148,6 +148,11 @@ public:
 
 // Enemigo triángulo (sobrescribe draw)
 class TriangleEnemy : public Enemy {
+public:
+	void draw() override;
+};
+
+class ElipseEnemy : public Enemy {
 public:
 	void draw() override;
 };
@@ -168,9 +173,9 @@ public:
 class PowerUp : public Subject {
 public:
 	ofVec2f pos;
-	float radius; 
+	float radius;
 	std::string type;
-	bool active; 
+	bool active;
 
 	PowerUp(ofVec2f p, std::string t);
 	void draw();
@@ -188,7 +193,7 @@ public:
 	void draw();
 	void keyPressed(int key);
 
-	void reset(); 
+	void reset();
 };
 
 
@@ -197,7 +202,6 @@ public:
 ### .cpp
 
 ```cpp
-
 #include "ofApp.h"
 #include <cmath> 
 
@@ -205,24 +209,24 @@ public:
 // PLAYER STATES IMPLEMENTATION
 
 
-void NormalState::update(PlayerCircle * c) {
-	
+void NormalState::update(PlayerCircle* c) {
+
 	c->move();
 }
 
-void NormalState::draw(PlayerCircle * c) {
-	
-	ofSetColor(0, 200, 255); 
-	ofDrawCircle(c->pos, c->radius); 
+void NormalState::draw(PlayerCircle* c) {
+
+	ofSetColor(0, 200, 255);
+	ofDrawCircle(c->pos, c->radius);
 }
 
 
-void PowerState::update(PlayerCircle * c) {
-	
+void PowerState::update(PlayerCircle* c) {
+
 	c->move();
 
 	//  controla su duración propia con timer local.
-	
+
 	timer += ofGetLastFrameTime();
 
 	// Si se cumple la duración, volvemos al estado Normal automáticamente.
@@ -230,25 +234,25 @@ void PowerState::update(PlayerCircle * c) {
 		c->changeState(std::make_unique<NormalState>());
 }
 
-void PowerState::draw(PlayerCircle * c) {
-	
+void PowerState::draw(PlayerCircle* c) {
+
 	ofSetColor(255, 255, 0);
 	ofDrawCircle(c->pos, c->radius * 1.3);
 }
 
 
-void WeakState::update(PlayerCircle * c) {
+void WeakState::update(PlayerCircle* c) {
 	c->move();
 }
 
-void WeakState::draw(PlayerCircle * c) {
-	ofSetColor(255, 50, 50); 
-	ofDrawCircle(c->pos, c->radius * 0.8); 
+void WeakState::draw(PlayerCircle* c) {
+	ofSetColor(255, 50, 50);
+	ofDrawCircle(c->pos, c->radius * 0.8);
 }
 
 
-void InvulnerableState::update(PlayerCircle * c) {
-	
+void InvulnerableState::update(PlayerCircle* c) {
+
 	c->move();
 
 	// Aumentamos el temporizador del estado
@@ -257,7 +261,7 @@ void InvulnerableState::update(PlayerCircle * c) {
 	if (fmod(timer, 0.2f) < 0.1f)
 		visible = !visible;
 
-	
+
 	if (timer > 3.0f) {
 
 		// Volvemos al estado que tocaba antes de la invulnerabilidad.
@@ -268,20 +272,20 @@ void InvulnerableState::update(PlayerCircle * c) {
 	}
 }
 
-void InvulnerableState::draw(PlayerCircle * c) {
-	
+void InvulnerableState::draw(PlayerCircle* c) {
+
 	if (visible) {
-		ofSetColor(150, 150, 255); 
+		ofSetColor(150, 150, 255);
 		ofDrawCircle(c->pos, c->radius);
 	}
 }
 
-void GameOverState::update(PlayerCircle * c) {
-	
+void GameOverState::update(PlayerCircle* c) {
+
 }
 
-void GameOverState::draw(PlayerCircle * c) {
-	
+void GameOverState::draw(PlayerCircle* c) {
+
 	ofSetColor(100, 100, 100);
 	ofDrawCircle(c->pos, c->radius);
 }
@@ -290,23 +294,23 @@ void GameOverState::draw(PlayerCircle * c) {
 // PLAYER
 
 PlayerCircle::PlayerCircle() {
-	
+
 	reset();
 }
 
 void PlayerCircle::reset() {
-	
+
 	pos = ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f);
 	radius = 20;
-	speed = 4.0;
+	speed = 6;
 	lives = 3;
 	prevStateName = "Normal";
 	state = std::make_unique<NormalState>(); // State Pattern: comenzamos en Normal
-	canMove = true; 
+	canMove = true;
 }
 
 void PlayerCircle::move() {
-	
+
 	if (!canMove) return;
 
 	// Control basico con flechas del teclado
@@ -326,18 +330,19 @@ void PlayerCircle::draw() { state->draw(this); }
 
 // Lógica de daño
 void PlayerCircle::takeDamage() {
-	
+
 	if (state->getName() == "Invulnerable" || state->getName() == "Power" || state->getName() == "GameOver")
 		return;
 
 	lives--;
 	prevStateName = (lives == 2) ? "Weak" : "Normal";
 
-	
+
 	if (lives > 0) {
 		changeState(std::make_unique<InvulnerableState>());
-	} else {
-		
+	}
+	else {
+
 		changeState(std::make_unique<GameOverState>());
 		canMove = false; // bloqueamos movimiento por completo
 	}
@@ -361,7 +366,7 @@ void PlayerCircle::onPowerUpActivated(std::string type) {
 
 // Movimiento por defecto de un enemigo: se desplaza por su velocidad y rebota en bordes.
 void Enemy::update() {
-	pos += vel;
+	pos += vel * 4;
 	if (pos.x < 0 || pos.x > ofGetWidth()) vel.x *= -1;
 	if (pos.y < 0 || pos.y > ofGetHeight()) vel.y *= -1;
 }
@@ -386,16 +391,25 @@ void TriangleEnemy::draw() {
 		pos.x + size, pos.y + size);
 }
 
+void ElipseEnemy::draw() {
+	ofSetColor(color);
+
+  ofDrawEllipse(pos.x - size / 2, pos.y - size / 2, size * 3, size * 1.3);
+
+}
+
 // EnemyFactory: decide qué subclase crear y la inicializa.
 // Aquí se centraliza la creación (Factory Pattern), facilitando añadir
 
 std::shared_ptr<Enemy> EnemyFactory::createEnemy() {
-	int r = ofRandom(3); // ofRandom devuelve float; asignamos a int para simplificar la elección.
+	int r = ofRandom(4); // ofRandom devuelve float; asignamos a int para simplificar la elección.
 	std::shared_ptr<Enemy> e;
 	if (r == 0)
 		e = std::make_shared<Enemy>();
 	else if (r == 1)
 		e = std::make_shared<SquareEnemy>();
+	else if (r == 2)
+		e = std::make_shared<ElipseEnemy>();
 	else
 		e = std::make_shared<TriangleEnemy>();
 
@@ -438,11 +452,11 @@ void PowerUp::draw() {
 
 
 void ofApp::setup() {
-	
+
 	ofSetWindowTitle("Arte Generativo con Observer, Factory, State y Game Over");
 	ofBackground(0);
 
-	
+
 	reset();
 }
 
@@ -453,7 +467,7 @@ void ofApp::reset() {
 	powerUps.clear();
 
 	// Generamos 5 enemigos iniciales con la Factory
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 8; i++)
 		enemies.push_back(EnemyFactory::createEnemy());
 
 	// Creamos dos power-ups de ejemplo y registramos al jugador como observador.
@@ -468,30 +482,30 @@ void ofApp::reset() {
 
 
 void ofApp::update() {
-	
+
 	player.update();
 
-	
+
 	if (player.state->getName() != "GameOver") {
-		
-		for (auto & e : enemies) {
+
+		for (auto& e : enemies) {
 			e->update();
 
 			// Distancia entre enemigo y jugador:
 			float dist = e->pos.distance(player.pos);
 
-			
+
 			if (dist < e->size / 2 + player.radius) {
 				player.takeDamage();
 			}
 		}
 
-		
-		for (auto & p : powerUps) {
+
+		for (auto& p : powerUps) {
 			// Si está activo y la distancia indica colisión, notificar.
 			if (p->active && p->pos.distance(player.pos) < player.radius + p->radius) {
 				p->notifyPowerUp(p->type); // Aquí el Subject notifica a todos sus Observers
-				p->active = false; 
+				p->active = false;
 			}
 		}
 	}
@@ -501,10 +515,10 @@ void ofApp::update() {
 void ofApp::draw() {
 	player.draw();
 
-	for (auto & e : enemies)
+	for (auto& e : enemies)
 		e->draw();
 
-	for (auto & p : powerUps)
+	for (auto& p : powerUps)
 		p->draw();
 
 	// UI simple: vidas y estado 
@@ -527,6 +541,7 @@ void ofApp::keyPressed(int key) {
 		reset();
 	}
 }
+
 
 
 ```
