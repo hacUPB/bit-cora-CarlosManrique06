@@ -229,11 +229,23 @@ El jugador es el círculo azul, el poder de defensa es el círculo amarillo, el 
 
 ![alt text](Observers.png)
 
+En la anterior imagen se puede observar el size de los observadores al inscribir un power up para el notificar el evento, que en este caso estarian suscritos p1 y p2 que serian los 2 power ups de velocidad e invulnerabilidad, se observa el puntero de los por ups  y los atributos que maneja cada uno.
+
+
 
 - Power Ups
 
 ![alt text](PowerUpsCapacity.png)
 
+Aqui se observan, ya los power ups en sí y la capacidad que mantiene, como son pocos al igual que los enemigos, no ocupan tanta cantidad de memoria, pero si decido seguir agregando más, aquí puedo hacer seguimiento  el tamaño que tengan
+
 - Memoria
 
 ![alt text](Memoria.png)
+
+La gráfico muestra que mayormente el consumo es estable con leves aumentos de consumos, ya que la línea no es totalmente recta, pero no consume mucho el programa, probe diferentes cantidades de enemigos a la vez, no encontre un topo del minimo para que suba, pero aveces subia de más o se mantenia, así que esto lo puedo tener en consideracion para la cantidad de enemigos y poderes en el juego, ya que buscaría la forma de que fueran apareciend y desapareciendo para mejorar el rendimiento y tenerlo más estable sin tener tanto enemigo en pantalla o que ocupe memoria innecesariamente.
+
+
+### Video del programa
+
+[Link del video](https://youtu.be/nfLmBIkpaMU)
