@@ -46,41 +46,276 @@ R/ Una textura es una imagen que se aplica a una superficie de una mesh para dar
 - ¿Qué transformaciones se requieren para mover un vértice del 3D world al View Screen?
 
 
-R/
+ R/ 
 
 - ¿Al proceso de convertir los triángulos en fragmentos se le llama?
 
 
-R/
+ R/ A ese proceso se le llama rasterización . La rasterización toma triángulos y determina qué píxeles cubren, además de interpolar atributos como color, coordenadas UV y normales por fragmento.
 
 - ¿Qué es el framebuffer?
 
-R/
-
+ R/ El framebuffer es la memoria normalmente en la GPU donde se almacenan los valores finales que se mostrarán en pantalla. Incluye al menos el color buffer RGBA y suele complementarse con el depth buffer que es z-buffer, para evitar parpadeo al actualizar la pantalla.
 
 - ¿Para qué se usa el Z-buffer o depth buffer en el render pipeline?
 
-R/
+
+ R/ El Z-buffer guarda la profundidad de cada píxel ya rasterizado. Al procesar un nuevo fragmento se compara su profundidad con la del Z-buffer para decidir si el fragmento está más cerca y debe escribir su color, o si está detrás y debe ser descartado. E
+
 
 
 ### Actividad 2
 
 - ¿Cómo funciona?
 
-R/
+R/ openFrameworks carga los shaders de .vertex y .frag, y la GPU usa el código para transformar vértices y colorear píxeles.
 
 - ¿Qué resultados obtuviste?
 
-R/
+
+R/ Un degradado de color azul al magenta.
+
+
+![alt text](Degradado.jpg)
 
 - ¿Estás usando un vertex shader?
 
-R/
+R/ Sí, ya que con el begin y end estoy diciendo que use los shader que proporcione y transforma las posiciones de los vértices.
 
 - ¿Estás usando un fragment shader?
 
-R/
+R/ Sí, ya que con el begin y end estoy diciendo que use los shader que proporcione y calcula el color de cada píxel en función de su posición.
 
 - Analiza el código de los shaders. ¿Qué hace cada uno?
 
+shader.vert
+```cpp
+OF_GLSL_SHADER_HEADER
+
+uniform mat4 modelViewProjectionMatrix;
+
+in vec4 position;
+
+void main(){
+	gl_Position = modelViewProjectionMatrix * position;
+}
+
+```
+ El shader.vert  transforma las posiciones de los vértices para que OpenGL sepa dónde dibujarlos en la pantalla.
+ 
+ shader.frag
+
+ ```cpp
+OF_GLSL_SHADER_HEADER
+
+out vec4 outputColor;
+
+void main()
+{
+    // gl_FragCoord contains the window relative coordinate for the fragment.
+    // we use gl_FragCoord.x position to control the red color value.
+    // we use gl_FragCoord.y position to control the green color value.
+    // please note that all r, g, b, a values are between 0 and 1.
+    
+    float windowWidth = 1024.0;
+    float windowHeight = 768.0;
+    
+	float r = gl_FragCoord.x / windowWidth;
+	float g = gl_FragCoord.y / windowHeight;
+	float b = 1.0;
+	float a = 1.0;
+	outputColor = vec4(r, g, b, a);
+}
+```
+  El shader.frag colorea los píxeles según su posición en pantalla.
+
+
+  ### Ejemplo 2: Mover un plano y colores con los shaders
+
+  - shader.vert
+
+```cpp
+
+OF_GLSL_SHADER_HEADER
+
+// these are for the programmable pipeline system
+uniform mat4 modelViewProjectionMatrix;
+in vec4 position;
+
+// the time value is passed into the shader by the OF app.
+uniform float time;
+
+
+void main()
+{
+    // the sine wave travels along the x-axis (across the screen),
+    // so we use the x coordinate of each vertex for the calculation,
+    // but we displace all the vertex along the y axis (up the screen)/
+    float displacementHeight = 100.0;
+    float displacementY = sin(time + (position.x / 100.0)) * displacementHeight;
+	
+    vec4 modifiedPosition = modelViewProjectionMatrix * position;
+	modifiedPosition.y += displacementY;
+	gl_Position = modifiedPosition;
+}
+
+
+```
+
+- la pos Gl es lo que sale del archivo .vert, entonces al valor que hagamos igual glPosition, sera la pos de cada vertice en la pantalla, en este caso se uso sen para crear una especie de plano ondulado y para el mouse como no se necesita para cdda vertice sino para cada draw() se guarda un valor uniforme.
+
+- shader.frag
+
+```cpp
+
+OF_GLSL_SHADER_HEADER
+
+uniform vec4 globalColor;
+
+out vec4 outputColor;
+ 
+void main()
+{
+    outputColor = globalColor;
+}
+
+
+```
+- En este caso se usa un color uniforme debido a que no se necesita saber la posicion de cada vertice para cambiar de color, sino que se cambia por cada draw entonces se guarda esa pos y se cambia el color a todos los vertices en la pantalla.
+
+![alt text](ejemplo2.jpg)
+
+### Actividad 3
+
+- ¿Qué es un uniform?
+
+R/ 	Una variable global enviada desde el CPU a la GPU, en este caso de OF a los shader y se llama asi Porque su valor es igual  para todos los vértices o fragmentos durante un draw(), se declara dentro del shader, con la palabra clave uniform.
+
+- ¿Cómo funciona el código de aplicación, los shaders y cómo se comunican estos?
+
+
+R/ Se comunica con los shadersa través de variables llamadas uniforms. El programa  activa el shader con shader.begin(), le envía datos como el color o la posición del mouse con setUniform(), y luego dibuja una figura. El vertex shader procesa la posición de cada vértice en pantalla, y el fragment shader determina el color de cada píxel. Así, la CPU define qué se dibuja y la GPU decide cómo se ve.
+
+
+### Ejemplo 3: Ahora usar la pos del mouse con uniforms
+
+- shader.vert
+
+```cpp
+
+OF_GLSL_SHADER_HEADER
+
+// these are for the programmable pipeline system
+uniform mat4 modelViewProjectionMatrix;
+in vec4 position;
+
+uniform float mouseRange;
+uniform vec2 mousePos;
+uniform vec4 mouseColor;
+
+void main()
+{
+    // copy position so we can work with it.
+    vec4 pos = position;
+    
+    // direction vector from mouse position to vertex position.
+	vec2 dir = pos.xy - mousePos;
+    
+    // distance between the mouse position and vertex position.
+	float dist =  sqrt(dir.x * dir.x + dir.y * dir.y);
+    
+    // check vertex is within mouse range.
+	if(dist > 0.0 && dist < mouseRange) {
+		
+		// normalise distance between 0 and 1.
+		float distNorm = dist / mouseRange;
+        
+		// flip it so the closer we are the greater the repulsion.
+		distNorm = 1.0 - distNorm;
+		
+        // make the direction vector magnitude fade out the further it gets from mouse position.
+        dir *= distNorm;
+        
+		// add the direction vector to the vertex position.
+		pos.x += dir.x;
+		pos.y += dir.y;
+	}
+
+	// finally set the pos to be that actual position rendered
+	gl_Position = modelViewProjectionMatrix * pos;
+}
+```
+- En este caso para añadir la interactividad del mouse se hace a traves de los uniform, ya  que la posicion no cambia por vertice sino por draw() podemos pasar cierta cantidad de valores en el shader dependiendo de la funcion como por ejemplo:   shader.setUniform1f("mouseRange", 150); // SET A UNIFORM, el cual manda un solo valor, para pasar 2 se usa por ejemplo:  shader.setUniform2f("mousePos", mx, my);  // SET A UNIFORM, el cual manda dos valores de posicion, se pueden mandar 4 con un array, por ejemplo:    shader.setUniform4fv("mouseColor", &mouseColor[0]);  // SET A UNIFORM, el cual se logra con un puntero que apunte al primer valor en el array para saber la pos de los diferentes valores.
+
+### Actividad 4
+
+- ¿Qué hace el código del ejemplo?
+
+R/ El ejemplo crea un efecto donde los vértices de un plano  se mueven del mouse cuando este se acerca. El color del plano también cambia gradualmente de magenta a azul dependiendo de la posición horizontal del mouse.
+
+- ¿Cómo funciona el código de aplicación, los shaders y cómo se comunican estos?
+
+R/ Se envian uniforms al shader sobre la posición del mouse, un rango de influencia (mouseRange) y un color (mouseColor). El vertex shader usa la posición del mouse para alterar la posición de los vértices, y el fragment shader usa el color pasado desde la aplicación para colorear el plano.
+
+- Realiza modificaciones a ofApp.cpp y al vertex shader para conseguir otros comportamientos.
+
 R/
+
+- Realiza modificaciones al fragment shader para conseguir otros comportamientos.
+
+R/
+
+![alt text](Ejemplo3.jpg)
+
+
+
+
+### Ejemplo 4: Texturas
+
+- shader.vert
+
+```cpp
+
+OF_GLSL_SHADER_HEADER
+
+// these are for the programmable pipeline system
+uniform mat4 modelViewProjectionMatrix;
+in vec4 position;
+
+uniform float mouseRange;
+uniform vec2 mousePos;
+uniform vec4 mouseColor;
+
+void main()
+{
+    // copy position so we can work with it.
+    vec4 pos = position;
+    
+    // direction vector from mouse position to vertex position.
+	vec2 dir = pos.xy - mousePos;
+    
+    // distance between the mouse position and vertex position.
+	float dist =  sqrt(dir.x * dir.x + dir.y * dir.y);
+    
+    // check vertex is within mouse range.
+	if(dist > 0.0 && dist < mouseRange) {
+		
+		// normalise distance between 0 and 1.
+		float distNorm = dist / mouseRange;
+        
+		// flip it so the closer we are the greater the repulsion.
+		distNorm = 1.0 - distNorm;
+		
+        // make the direction vector magnitude fade out the further it gets from mouse position.
+        dir *= distNorm;
+        
+		// add the direction vector to the vertex position.
+		pos.x += dir.x;
+		pos.y += dir.y;
+	}
+
+	// finally set the pos to be that actual position rendered
+	gl_Position = modelViewProjectionMatrix * pos;
+}
+
+```
