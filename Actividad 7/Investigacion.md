@@ -75,6 +75,7 @@ R/ openFrameworks carga los shaders de .vertex y .frag, y la GPU usa el código 
 
 R/ Un degradado de color azul al magenta.
 
+### Ejemplo 1
 
 ![alt text](Degradado.jpg)
 
@@ -278,44 +279,79 @@ R/
 
 OF_GLSL_SHADER_HEADER
 
-// these are for the programmable pipeline system
+// these are for the programmable pipeline system and are passed in
+// by default from OpenFrameworks
 uniform mat4 modelViewProjectionMatrix;
-in vec4 position;
 
-uniform float mouseRange;
-uniform vec2 mousePos;
-uniform vec4 mouseColor;
+in vec4 position;
+in vec2 texcoord;
+
+// this is something we're creating for this shader
+out vec2 texCoordVarying;
+
+// this is coming from our C++ code
+uniform float mouseX;
 
 void main()
 {
-    // copy position so we can work with it.
-    vec4 pos = position;
-    
-    // direction vector from mouse position to vertex position.
-	vec2 dir = pos.xy - mousePos;
-    
-    // distance between the mouse position and vertex position.
-	float dist =  sqrt(dir.x * dir.x + dir.y * dir.y);
-    
-    // check vertex is within mouse range.
-	if(dist > 0.0 && dist < mouseRange) {
-		
-		// normalise distance between 0 and 1.
-		float distNorm = dist / mouseRange;
-        
-		// flip it so the closer we are the greater the repulsion.
-		distNorm = 1.0 - distNorm;
-		
-        // make the direction vector magnitude fade out the further it gets from mouse position.
-        dir *= distNorm;
-        
-		// add the direction vector to the vertex position.
-		pos.x += dir.x;
-		pos.y += dir.y;
-	}
+    // here we move the texture coordinates
+    texCoordVarying = vec2(texcoord.x + mouseX, texcoord.y);
 
-	// finally set the pos to be that actual position rendered
-	gl_Position = modelViewProjectionMatrix * pos;
+    // send the vertices to the fragment shader
+	gl_Position = modelViewProjectionMatrix * position;
+}
+
+
+```
+- el out vec2 textCoordVarying sirve para decirle al programa que bit de la textura ponerlo en forma de pixel en la pantalla mediante la interpolacion.
+
+- shader.frag
+
+```cpp
+
+OF_GLSL_SHADER_HEADER
+
+// this is how we receive the texture
+uniform sampler2D tex0;
+uniform vec2 resolution;
+
+in vec2 texCoordVarying;
+
+out vec4 outputColor;
+ 
+void main()
+{
+    outputColor = texture(tex0, texCoordVarying / resolution);
 }
 
 ```
+- Como no se le da un nombre uniform aparece como text0 el sampler2D
+
+![alt text](ejemplo4.jpg)
+
+
+
+### Ejemplo 5
+
+- shader.frag
+
+```cpp
+OF_GLSL_SHADER_HEADER
+
+uniform sampler2D tex0;
+uniform sampler2D imageMask;
+
+in vec2 texCoordVarying;
+
+out vec4 outputColor;
+
+void main()
+{
+    vec4 texel0 = texture(tex0, texCoordVarying);
+    vec4 texel1 = texture(imageMask, texCoordVarying);
+    outputColor = vec4(texel0.rgb, texel0.a * texel1.a);
+}
+
+```
+
+- 
