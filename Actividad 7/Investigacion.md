@@ -46,7 +46,7 @@ R/ Una textura es una imagen que se aplica a una superficie de una mesh para dar
 - ¿Qué transformaciones se requieren para mover un vértice del 3D world al View Screen?
 
 
- R/ 
+ R/ Se transforman en la GPU mediante el graphics pipeline: primero el vertex shader los proyecta de la cámara y luego al la pantalla; después, el rasterizador los convierte en fragmentos o píxeles, que el fragment shader colorea antes de enviarlos al framebuffer para mostrarse en pantalla.
 
 - ¿Al proceso de convertir los triángulos en fragmentos se le llama?
 
@@ -90,6 +90,7 @@ R/ Sí, ya que con el begin y end estoy diciendo que use los shader que proporci
 - Analiza el código de los shaders. ¿Qué hace cada uno?
 
 shader.vert
+
 ```cpp
 OF_GLSL_SHADER_HEADER
 
@@ -197,6 +198,34 @@ R/ 	Una variable global enviada desde el CPU a la GPU, en este caso de OF a los 
 
 R/ Se comunica con los shadersa través de variables llamadas uniforms. El programa  activa el shader con shader.begin(), le envía datos como el color o la posición del mouse con setUniform(), y luego dibuja una figura. El vertex shader procesa la posición de cada vértice en pantalla, y el fragment shader determina el color de cada píxel. Así, la CPU define qué se dibuja y la GPU decide cómo se ve.
 
+- Modifica el código de la actividad para cambiar el color de cada uno de los píxeles de la pantalla personalizando el fragment shader.
+
+```cpp
+OF_GLSL_SHADER_HEADER
+
+uniform vec4 globalColor;
+
+out vec4 outputColor;
+ 
+void main()
+{
+
+float windowWidth = 1024.0;
+float windowHeight = 768.0;
+
+float r = gl_FragCoord.x / windowWidth;
+float g = gl_FragCoord.y / windowHeight;
+float b = 0.1;   
+float a = 1.0;
+
+outputColor = vec4(r, g * 0.7, b, a);
+
+```
+}
+
+- Le añadí una modificacion como en el primer ejemplo, pero para que se vea color naranja.
+
+![alt text](Modificacion_ej2.jpg)
 
 ### Ejemplo 3: Ahora usar la pos del mouse con uniforms
 
@@ -260,11 +289,24 @@ R/ Se envian uniforms al shader sobre la posición del mouse, un rango de influe
 
 - Realiza modificaciones a ofApp.cpp y al vertex shader para conseguir otros comportamientos.
 
-R/
+R/ // distance between the mouse position and vertex position.
+	float dist =  sqrt(dir.x * dir.x + dir.y + dir.y * mouseRange);
+
+ - Este fue un cambio que hice para que se vea diferente cuando el mouse se mueve.
+
+ 	ofFloatColor colorLeft = ofColor::orange;
+	ofFloatColor colorRight = ofColor::green;
+
+- Para cambiar los colores en of app
 
 - Realiza modificaciones al fragment shader para conseguir otros comportamientos.
 
-R/
+
+R/  outputColor = mouseColor * vec4(gl_FragCoord.x / 800.0, gl_FragCoord.y / 600.0, 1.0, 1.0);
+
+Para una especie de degradado.
+
+![alt text](mod2_ejemplo3.jpg)
 
 ![alt text](Ejemplo3.jpg)
 
