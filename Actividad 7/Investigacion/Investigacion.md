@@ -164,7 +164,7 @@ void main()
 
 ```
 
-- la pos Gl es lo que sale del archivo .vert, entonces al valor que hagamos igual glPosition, sera la pos de cada vertice en la pantalla, en este caso se uso sen para crear una especie de plano ondulado y para el mouse como no se necesita para cdda vertice sino para cada draw() se guarda un valor uniforme.
+- la pos Gl es lo que sale del archivo .vert, entonces al valor que hagamos igual glPosition, sera la pos de cada vertice en la pantalla, en este caso se uso sen para crear una especie de plano ondulado y para el mouse como no se necesita para cada vertice sino para cada draw() se guarda un valor uniforme.
 
 - shader.frag
 
